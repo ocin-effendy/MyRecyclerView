@@ -3,12 +3,14 @@ package com.example.myrecyclerview
 import Hero
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myrecyclerview.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         rvHeroes = findViewById(R.id.rv_heroes)
         rvHeroes.setHasFixedSize(true)
 
-        list.addAll(getListHeroes())
+//        list.addAll(getListHeroes())
+        list.addAll(listHeroes)
         showRecyclerList()
 
     }
@@ -48,17 +51,31 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Kamu memilih " + hero.name, Toast.LENGTH_SHORT).show()
     }
 
-    private fun getListHeroes(): ArrayList<Hero> {
-        val dataName = resources.getStringArray(R.array.data_name)
-        val dataDescription = resources.getStringArray(R.array.data_description)
-        val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
-        val listHero = ArrayList<Hero>()
-        for (i in dataName.indices) {
-            val hero = Hero(dataName[i], dataDescription[i], dataPhoto.getResourceId(i, -1))
-            listHero.add(hero)
+//    private fun getListHeroes(): ArrayList<Hero> {
+//        val dataName = resources.getStringArray(R.array.data_name)
+//        val dataDescription = resources.getStringArray(R.array.data_description)
+//        val dataPhoto = resources.getStringArray(R.array.data_photo)
+//        val listHero = ArrayList<Hero>()
+//        for (i in dataName.indices) {
+//            val hero = Hero(dataName[i], dataDescription[i], dataPhoto[i])
+//            listHero.add(hero)
+//        }
+//        return listHero
+//    }
+
+    private val listHeroes: ArrayList<Hero>
+        get() {
+            val dataName = resources.getStringArray(R.array.data_name)
+            val dataDescription = resources.getStringArray(R.array.data_description)
+            val dataPhoto = resources.getStringArray(R.array.data_photo)
+            val listHero = ArrayList<Hero>()
+            for (i in dataName.indices) {
+                val hero = Hero(dataName[i], dataDescription[i], dataPhoto[i])
+                Log.d("CONTENT", dataPhoto[i].toString())
+                listHero.add(hero)
+            }
+            return listHero
         }
-        return listHero
-    }
 
     private fun showRecyclerList() {
         rvHeroes.layoutManager = LinearLayoutManager(this)
